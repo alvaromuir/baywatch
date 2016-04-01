@@ -19,8 +19,4 @@ func main() {
 
 	newURL := fetch.SignBKRequest(verb, endPoint, data)
 	fetch.Request(verb, newURL, data)
-
-	// fmt.Println(verb)
-	// fmt.Println(endPoint)
-	// fmt.Println(data)
 }

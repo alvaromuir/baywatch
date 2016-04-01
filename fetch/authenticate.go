@@ -10,8 +10,8 @@ import (
 )
 
 // Add your API Keys below
-var bkuid = os.Getenv("BK_CMB_KEY")
-var bksecretkey = os.Getenv("BK_CMB_SECRET")
+var bkuid = os.Getenv("BK_KEY")          // your BlueKai API KEY
+var bksecretkey = os.Getenv("BK_SECRET") // your BlueKai API Secret
 
 const baseURL = "http://services.bluekai.com/Services/WS/"
 
