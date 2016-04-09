@@ -1,9 +1,27 @@
 ## Keep an eye on the kids in the pool
-Baywatch is a automated cookiepool threshold monitor for BlueKai DMP instances.
+Baywatch is a automated cookie pool threshold monitor for BlueKai DMP instances.
 
 Written in Go.
 
-Add your API keys in fetch/authenticate.go or as an env virable as "BK_KEY" and
-"BK_SECRET" respectively
+Add your API keys and BK ID in a .env file as "BK_KEY" and
+"BK_SECRET" and "BK_PARTNER_ID" respectively.
 
-@alvaromuir
+usage:
+
+```
+$ ./baywatch [base] [resource] [endpoint] <opt:data>
+```
+BK's ping example would translate to:
+
+```
+$ ./baywatch services GET Ping
+```
+
+
+### Updates 04.09.15
+added server version
+
+```
+$ ./baywatch server
+```
+@alvaromuir, verizon national digital media
