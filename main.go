@@ -24,17 +24,8 @@ func main() {
 				data = os.Args[4]
 			}
 		}
-		switch callType {
-		case "services":
-			// ex: .baywatch services GET sites
-			rslt := fetch.Request(method, fetch.SignServicesRequest(method, endPoint, data), data)
-			fmt.Println(rslt)
-		case "taxonomy":
-			// ex: .baywatch taxonomy GET categories
-			// ex: .baywatch taxonomy GET categories "parentCategory.id=12345"
-			rslt := fetch.Request(method, fetch.SignTaxonomyRequest(method, endPoint, data), data)
-			fmt.Println(rslt)
-		}
+		rslt := fetch.Request(method, fetch.SignRequest(callType, method, endPoint, data), data)
+		fmt.Println(rslt)
 	} else {
 		// ex: http://localhost:8080/taxonomy/GET/categories
 		// ex: http://localhost:8080/taxonomy/GET/categories?parentCategory.id=399598

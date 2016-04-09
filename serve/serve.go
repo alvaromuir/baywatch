@@ -25,15 +25,8 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	endPoint := param(urlArgs, 3)
 	data := r.URL.RawQuery
 
-	var rslt string
-	switch callType {
-	case "services":
-		// ex: .baywatch services GET sites
-		rslt = fetch.Request(method, fetch.SignServicesRequest(method, endPoint, data), data)
-	case "taxonomy":
-		// ex: .baywatch taxonomy GET categories "parentCategory.id=12345"
-		rslt = fetch.Request(method, fetch.SignTaxonomyRequest(method, endPoint, data), data)
-	}
+	rslt := fetch.Request(method, fetch.SignRequest(callType, method, endPoint, data), data)
+
 	w.Header().Set("Server", "vz media science: baywatch")
 	w.WriteHeader(200)
 	w.Header().Set("Content-Type", "application/json")
