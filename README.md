@@ -1,7 +1,5 @@
 ## Keep an eye on the kids in the pool
-Baywatch is a automated cookie pool threshold monitor for BlueKai DMP instances.
-
-Written in Go.
+Baywatch is *currently* an API exploration tool for BlueKai DMP instances.
 
 Add your API keys and BK ID in a .env file as "BK_KEY" and
 "BK_SECRET" and "BK_PARTNER_ID" respectively.
@@ -9,19 +7,32 @@ Add your API keys and BK ID in a .env file as "BK_KEY" and
 usage:
 
 ```
-$ ./baywatch [base] [resource] [endpoint] <opt:data>
+$ ./baywatch [ server ] | [ callType, method, endPoint ] <opt: data > < opt: format >
 ```
 BK's ping example would translate to:
 
 ```
-$ ./baywatch services GET Ping
+$ ./baywatch -callType=services -method=GET -endpoint=Ping
 ```
 
 
-### Updates 04.09.15
-added server version
+run as a server
 
 ```
-$ ./baywatch server
+$ ./baywatch -server
 ```
-@alvaromuir, verizon national digital media
+
+Here, urls follow this pattern:
+http://server:port/callType/method/endPoint?data
+
+e.g.:
+```
+localhost:8080/services/GET/Ping
+localhost:8080/services/GET/sites
+localhost:8080/taxonomy/GET/categories?parentCategory.id=399598
+```
+
+See [BlueKai's API Docs](https://kb.bluekai.com/display/PD/BlueKai+API+Docs) for ideas (login required)
+
+
+@alvaromuir, Verizon Corporate Digital Media

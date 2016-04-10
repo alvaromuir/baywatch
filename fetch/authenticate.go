@@ -76,6 +76,5 @@ func SignRequest(baseURL string, method string, endPoint string, data string) st
 	}
 
 	newURL += "bkuid=" + bkuid + "&bksig=" + u
-	// fmt.Println(newURL)
 	return newURL
 }

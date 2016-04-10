@@ -1,36 +1,80 @@
 package fetch
 
 import (
-	"bytes"
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 )
 
-// Request generates the method request
-func Request(method string, URL string, data string) string {
-	// cj, _ := cookiejar.New(nil)
+// PingRequest generates the method request
+func PingRequest(URL string) (*http.Response, *PingResponse, error) {
+	method := "GET"
+	data := ""
+	resp, err := CoreRequest(method, URL, data)
+	if err != nil {
+		resp.Body.Close()
+		fmt.Fprintf(os.Stderr, os.Args[0]+": %v", err)
+		os.Exit(1)
+	}
+	var rslt PingResponse
+	if err := json.NewDecoder(resp.Body).Decode(&rslt); err != nil {
+		resp.Body.Close()
+		return resp, nil, err
+	}
+	resp.Body.Close()
+	return resp, &rslt, nil
+}
+
+// TaxonomyBuyerRequest returns DMP dites in JSON format
+func TaxonomyBuyerRequest(method string, URL string, data string) (*http.Response, *BuyerViewCategoryResult, error) {
+	resp, err := CoreRequest(method, URL, data)
+	if err != nil {
+		resp.Body.Close()
+		fmt.Fprintf(os.Stderr, os.Args[0]+": %v", err)
+		os.Exit(1)
+	}
+	var rslt BuyerViewCategoryResult
+	if err := json.NewDecoder(resp.Body).Decode(&rslt); err != nil {
+		resp.Body.Close()
+		return resp, nil, err
+	}
+	return resp, &rslt, nil
+}
+
+// SiteRequest returns DMP dites in JSON format
+func SiteRequest(method string, URL string, data string) (*http.Response, *SiteResult, error) {
+	resp, err := CoreRequest(method, URL, data)
+	if err != nil {
+		resp.Body.Close()
+		fmt.Fprintf(os.Stderr, os.Args[0]+": %v", err)
+		os.Exit(1)
+	}
+	var rslt SiteResult
+	if err := json.NewDecoder(resp.Body).Decode(&rslt); err != nil {
+		resp.Body.Close()
+		return resp, nil, err
+	}
+	return resp, &rslt, nil
+}
+
+// CoreRequest is a bare-bones JSON request, essential for all other API calls
+func CoreRequest(method string, URL string, data string) (*http.Response, error) {
 	client := &http.Client{}
-	req, _ := http.NewRequest(method, URL, strings.NewReader(data))
+	req, err := http.NewRequest(method, URL, strings.NewReader(data))
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-type", "application/json")
-	res, err := client.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
+		resp.Body.Close()
+
 		fmt.Fprintf(os.Stderr, os.Args[0]+": %v", err)
 		os.Exit(1)
 	}
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, os.Args[0]+": %v", err)
-		os.Exit(1)
+	if resp.StatusCode != http.StatusOK {
+		resp.Body.Close()
+		return nil, fmt.Errorf("API request failed: %s", resp.Status)
 	}
-
-	if len(body) < 1 {
-		return "Status: " + strconv.Itoa(res.StatusCode)
-	}
-	return bytes.NewBuffer(body).String()
+	return resp, nil
 }
