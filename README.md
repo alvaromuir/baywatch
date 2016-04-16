@@ -13,8 +13,13 @@ BK's ping example would translate to:
 
 ```
 $ ./baywatch -callType=services -method=GET -endpoint=Ping
+```
+and a cookie count call can be written as:
+```
 $ ./baywatch -callType=taxonomy -method=GET -endPoint=categories -data="parentCategory.id=12345"
 ```
+
+### note, example cookie count response formatting included, you should pepper to taste.
 
 
 run as a server
