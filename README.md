@@ -13,6 +13,7 @@ BK's ping example would translate to:
 
 ```
 $ ./baywatch -callType=services -method=GET -endpoint=Ping
+$ ./baywatch -callType=taxonomy -method=GET -endPoint=categories -data="parentCategory.id=12345"
 ```
 
 
