@@ -19,7 +19,7 @@ and a cookie count call can be written as:
 $ ./baywatch -callType=taxonomy -method=GET -endPoint=categories -data="parentCategory.id=12345"
 ```
 
-### note, example cookie count response formatting included, you should pepper to taste.
+###### note, example cookie count response formatting included, you should pepper to taste.
 
 
 run as a server
@@ -35,7 +35,7 @@ e.g.:
 ```
 localhost:8080/services/GET/Ping
 localhost:8080/services/GET/sites
-localhost:8080/taxonomy/GET/categories?parentCategory.id=399598
+localhost:8080/taxonomy/GET/categories?parentCategory.id=12345
 ```
 
 See [BlueKai's API Docs](https://kb.bluekai.com/display/PD/BlueKai+API+Docs) for ideas (login required)
